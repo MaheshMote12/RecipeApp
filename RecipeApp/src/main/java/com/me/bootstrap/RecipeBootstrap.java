@@ -39,7 +39,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 		recipeService.saveRecipe(setup());
 		recipeService.saveRecipe(setup());
 		
-		System.out.println(repo.getAllRecipies().get(0).getCategories().size() );
+		System.out.println(repo.getRecipies().get(0).getCategories().size() );
 		
 	}
 
@@ -86,6 +86,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 		recipe.setServings(4);
 		recipe.setUrl("http://localhost:8080/g/");
 		recipe.setSource("http://www.google.com");
+		recipe.setDirection("first, you gotta wash those veggies! second, you must have to be 100% Vegan!!");
 
 		
 //		no need to add from here we added it already via helper method

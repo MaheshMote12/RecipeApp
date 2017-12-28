@@ -6,14 +6,12 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.me.model.Recipe;
 import com.me.model.UnitOfMeasure;
 import com.me.repository.RecipeRepository;
 
 @Repository
-@Transactional
 public class RecipeRepositoryImpl implements RecipeRepository {
 
 	private SessionFactory sessionFactory;
@@ -33,7 +31,7 @@ public class RecipeRepositoryImpl implements RecipeRepository {
 	}
 
 	@Override
-	public List<Recipe> getAllRecipies() {
+	public List<Recipe> getRecipies() {
 		Session session = sessionFactory.openSession();
 		
 		List<Recipe> list = session.createQuery("from Recipe r", Recipe.class).getResultList();
@@ -50,6 +48,15 @@ public class RecipeRepositoryImpl implements RecipeRepository {
 		
 		return list.get(0);
 		
+	}
+
+	@Override
+	public Recipe findById(Long id) {
+
+		Session session = sessionFactory.openSession();
+		Recipe recipe = session.get(Recipe.class, id);
+		
+		return recipe;
 	}
 
 	

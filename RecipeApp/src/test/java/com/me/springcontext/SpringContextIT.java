@@ -19,7 +19,7 @@ import com.me.repository.RecipeRepository;
 public class SpringContextIT {
 
 	@Autowired
-	private RecipeRepository recipeRepo;
+	private RecipeRepository recipeRepository;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -37,7 +37,7 @@ public class SpringContextIT {
 	@Test
 	public void getUOMIT(){
 		
-		UnitOfMeasure uom = recipeRepo.getUom("scoop");
+		UnitOfMeasure uom = recipeRepository.getUom("scoop");
 		
 		assertEquals("scoop", uom.getUnit());
 		
@@ -48,7 +48,7 @@ public class SpringContextIT {
 	@DirtiesContext
 	public void getUOMtable_spoonIT(){
 		
-		UnitOfMeasure uom = recipeRepo.getUom("table spoon");
+		UnitOfMeasure uom = recipeRepository.getUom("table spoon");
 		
 		assertEquals("table spoon", uom.getUnit());
 		
