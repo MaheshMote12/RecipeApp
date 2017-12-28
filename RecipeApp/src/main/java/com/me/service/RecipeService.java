@@ -1,32 +1,17 @@
 package com.me.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import java.util.List;
 
 import com.me.model.Recipe;
 import com.me.model.UnitOfMeasure;
-import com.me.repository.RecipeRepository;
 
-@Service
-public class RecipeService {
+public interface RecipeService {
 
-	private RecipeRepository recipeRepository;
-
-	@Autowired
-	public RecipeService(RecipeRepository recipeRepository) {
-		super();
-		this.recipeRepository = recipeRepository;
-	}
+	public void saveRecipe(Recipe recipe);
 	
+	public UnitOfMeasure getUOM(String unit);
 	
-	public void saveRecipe(Recipe recipe)
-	{
-		recipeRepository.save(recipe);
-	}
+	public Recipe findRecipeById(Long id);
 	
-	public UnitOfMeasure getUOM(String unit)
-	{
-		return recipeRepository.getUom(unit);
-	}
-	
+	public List<Recipe> getRecipies();
 }

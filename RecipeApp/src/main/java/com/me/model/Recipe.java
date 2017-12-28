@@ -1,7 +1,6 @@
 package com.me.model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -20,7 +19,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -78,6 +76,9 @@ public class Recipe {
 	@Getter @Setter
 	private byte[] image;
 	
+	@Lob
+	@Getter @Setter
+	private String direction;
 	
 	
 /**	these two utility methods are very usefull and efficient. always use this when dealing with onetomany

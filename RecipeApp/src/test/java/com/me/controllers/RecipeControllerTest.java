@@ -1,4 +1,4 @@
-package com.me.g;
+package com.me.controllers;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
@@ -24,22 +24,21 @@ import org.mockito.MockitoAnnotations;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.springframework.ui.Model;
 
-import com.me.controllers.MyController;
 import com.me.model.Recipe;
-import com.me.repository.RecipeRepository;
+import com.me.service.RecipeService;
 
 
 @RunWith(PowerMockRunner.class)
-public class MyControllerTest {
+public class RecipeControllerTest {
 
 	@Mock
-	private RecipeRepository recipeRepo;
+	private RecipeService recipeService;
 	@Mock
 	private Model model;
 	
 	
 	@InjectMocks
-	private MyController myController;
+	private RecipeController recipeController;
 	
 	@Captor
 	ArgumentCaptor<List<Recipe>> captor;
@@ -60,16 +59,16 @@ public class MyControllerTest {
 		// given
 		List<Recipe> list = Arrays.asList(new Recipe(), new Recipe() );
 		
-		when(recipeRepo.getAllRecipies()).thenReturn(list);
+		when(recipeService.getRecipies()).thenReturn(list);
 		
 
 		
 		//when
-		String home = myController.home( model);
+		String home = recipeController.indexPage( model);
 		
 		
 		//then
-		verify(recipeRepo, times(1)).getAllRecipies();
+		verify(recipeService, times(1)).getRecipies();
 		
 		verify(model, times(1)).addAttribute(eq("recipies"), anyListOf(Recipe.class));
 		
@@ -81,7 +80,7 @@ public class MyControllerTest {
 		
 		assertEquals(2, value.size());
 		
-		assertThat("home", is(home));
+		assertThat("index", is(home));
 
 	}
 	
