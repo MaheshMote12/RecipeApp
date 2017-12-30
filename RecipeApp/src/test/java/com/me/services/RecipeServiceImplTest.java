@@ -12,29 +12,32 @@ import static org.mockito.Mockito.when;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import com.me.converters.RecipeCommandToRecipe;
+import com.me.converters.RecipeToRecipeCommand;
 import com.me.model.Recipe;
 import com.me.repository.RecipeRepository;
-import com.me.service.RecipeService;
 import com.me.serviceImpl.RecipeServiceImpl;
 
 @RunWith(PowerMockRunner.class)
 public class RecipeServiceImplTest {
 
 	@Mock
+	private RecipeCommandToRecipe toRecipe;
+	@Mock
+	private RecipeToRecipeCommand toRecipeCommand;
+	@Mock
 	private RecipeRepository recipeRepo;
-	
-	private RecipeService recipeService; 
+	@InjectMocks
+	private RecipeServiceImpl recipeService; 
 	
 	@Before
 	public void setUp() throws Exception {
-
 		MockitoAnnotations.initMocks(this);
-		recipeService = new RecipeServiceImpl(recipeRepo);
-	
 	}
 
 	/*@After
@@ -67,9 +70,6 @@ public class RecipeServiceImplTest {
 		
 		verify(recipeRepo, times(1)).findById(anyLong());
 		verify(recipeRepo, never()).getRecipies();
-		
-		
-		
 		
 	}
 /*
