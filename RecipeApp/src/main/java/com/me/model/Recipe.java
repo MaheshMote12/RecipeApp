@@ -19,8 +19,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.SelectBeforeUpdate;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -30,6 +32,8 @@ import lombok.Setter;
 @Entity
 @Data
 @EqualsAndHashCode(exclude={"ingrediants", "categories", "notes"})
+@DynamicUpdate( value=true)
+@SelectBeforeUpdate(value=true)
 public class Recipe {
 
 	@Id

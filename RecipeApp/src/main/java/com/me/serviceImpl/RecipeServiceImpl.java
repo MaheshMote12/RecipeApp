@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.me.command.RecipeCommand;
+import com.me.converters.RecipeCommandToRecipe;
+import com.me.converters.RecipeToRecipeCommand;
 import com.me.model.Recipe;
 import com.me.model.UnitOfMeasure;
 import com.me.repository.RecipeRepository;
@@ -15,18 +18,28 @@ import com.me.service.RecipeService;
 @Transactional
 public class RecipeServiceImpl implements RecipeService{
 	
+	private RecipeCommandToRecipe toRecipe;
+	
+	private RecipeToRecipeCommand toRecipeCommand;
+	
 	private RecipeRepository recipeRepository;
 
 	@Autowired
-	public RecipeServiceImpl(RecipeRepository recipeRepository) {
+	public RecipeServiceImpl(RecipeRepository recipeRepository, RecipeToRecipeCommand toRecipeCommand, RecipeCommandToRecipe toRecipe) {
 		super();
 		this.recipeRepository = recipeRepository;
+		this.toRecipe = toRecipe;
+		this.toRecipeCommand = toRecipeCommand;
 	}
 	
 	@Override
-	public void saveRecipe(Recipe recipe)
+	public RecipeCommand saveRecipe(RecipeCommand recipeCommand)
 	{
-		recipeRepository.save(recipe);
+		Recipe detachedRecipe = toRecipe.convert(recipeCommand);
+		Recipe savedRecipe = recipeRepository.save(detachedRecipe);
+		
+		return toRecipeCommand.convert(savedRecipe);
+		
 	}
 	
 	@Override

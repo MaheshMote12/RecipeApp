@@ -22,12 +22,16 @@ public class RecipeRepositoryImpl implements RecipeRepository {
 	}
 
 	@Override
-	public void save(Recipe recipe) {
+	public Recipe save(Recipe recipe) {
 		Session session = sessionFactory.openSession();
+		
 		session.beginTransaction();
-		session.save(recipe);
+		session.saveOrUpdate(recipe);
 		session.flush();
 		session.getTransaction().commit();
+		
+		return recipe;
+	
 	}
 
 	@Override

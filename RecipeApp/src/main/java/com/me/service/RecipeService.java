@@ -2,12 +2,13 @@ package com.me.service;
 
 import java.util.List;
 
+import com.me.command.RecipeCommand;
 import com.me.model.Recipe;
 import com.me.model.UnitOfMeasure;
 
 public interface RecipeService {
 
-	public void saveRecipe(Recipe recipe);
+	public RecipeCommand saveRecipe(RecipeCommand recipeCommand);
 	
 	public UnitOfMeasure getUOM(String unit);
 	
