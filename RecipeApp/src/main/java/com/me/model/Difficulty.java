@@ -2,6 +2,6 @@ package com.me.model;
 
 public enum Difficulty {
 	
-	EAST,MODERATE,HARD;
+	Easy,Moderate,Hard, Not_That_Hard;
 
 }

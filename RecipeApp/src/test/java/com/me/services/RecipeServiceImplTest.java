@@ -17,24 +17,27 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import com.me.converters.RecipeCommandToRecipe;
+import com.me.converters.RecipeToRecipeCommand;
 import com.me.model.Recipe;
 import com.me.repository.RecipeRepository;
-import com.me.service.RecipeService;
+import com.me.serviceImpl.RecipeServiceImpl;
 
 @RunWith(PowerMockRunner.class)
 public class RecipeServiceImplTest {
 
 	@Mock
+	private RecipeCommandToRecipe toRecipe;
+	@Mock
+	private RecipeToRecipeCommand toRecipeCommand;
+	@Mock
 	private RecipeRepository recipeRepo;
-
 	@InjectMocks
-	private RecipeService recipeService; 
+	private RecipeServiceImpl recipeService; 
 	
 	@Before
 	public void setUp() throws Exception {
-
 		MockitoAnnotations.initMocks(this);
-	
 	}
 
 	/*@After

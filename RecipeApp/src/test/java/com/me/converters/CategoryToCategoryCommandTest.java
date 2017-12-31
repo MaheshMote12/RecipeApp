@@ -58,7 +58,6 @@ public class CategoryToCategoryCommandTest {
 
 		assertThat("spicy", is(command.getCategoryName()));
 		assertThat(1l, is(command.getCategoryId()));
-		assertThat(set.size(), is(command.getRecipies().size()));
 		
 		
 	}

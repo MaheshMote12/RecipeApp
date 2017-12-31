@@ -22,10 +22,18 @@ public class RecipeServiceImpl implements RecipeService{
 	
 	private RecipeToRecipeCommand toRecipeCommand;
 	
+	@Autowired
 	private RecipeRepository recipeRepository;
 
+	
+	
+	public RecipeServiceImpl() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	@Autowired
-	public RecipeServiceImpl(RecipeRepository recipeRepository, RecipeToRecipeCommand toRecipeCommand, RecipeCommandToRecipe toRecipe) {
+	public RecipeServiceImpl( RecipeRepository recipeRepository, RecipeToRecipeCommand toRecipeCommand, RecipeCommandToRecipe toRecipe) {
 		super();
 		this.recipeRepository = recipeRepository;
 		this.toRecipe = toRecipe;

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" session="false" %>
+    pageEncoding="ISO-8859-1" session="false" import="com.me.model.Difficulty" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%-- <c:url value="/resources/css" var="css"  />
@@ -36,6 +36,10 @@
 		<%@include file="show.jsp"   %> 
 	</c:if>
    
+
+	<c:if test="${userclickNewRecipe}">
+		<%@include file="recipeForm.jsp"   %> 
+	</c:if>
 	
 
 

@@ -6,10 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.me.command.RecipeCommand;
+import com.me.model.Difficulty;
 import com.me.model.Recipe;
 import com.me.service.RecipeService;
 
@@ -55,5 +60,35 @@ public class RecipeController
 		return "index";
 		
 	}
+	
+	@GetMapping
+	@RequestMapping("/recipe/new")
+	public String saveRecipe(Model model){
+		
+//		RecipeCommand command = new RecipeCommand();
+		
+		model.addAttribute("diff", Difficulty.values());
+		model.addAttribute("recipe", new RecipeCommand());
+		model.addAttribute("titel", "New Recipe");
+		model.addAttribute("userclickNewRecipe", true);
+
+		return "index";
+	}
+
+	@PostMapping("/recipe")
+	/*@RequestMapping(value="/recipe", method=RequestMethod.POST)*/
+	public String saveOrUpdateRecipe( @ModelAttribute("recipe") RecipeCommand recipeCommand, Model model){
+		
+		System.out.println("DIRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR " +recipeCommand.getDirection());
+		
+		RecipeCommand savedRecipe = recipeService.saveRecipe(recipeCommand);
+		
+		model.addAttribute("titel", "Recipe");
+		model.addAttribute("userclickRecipe", true);
+
+		
+		return "redirect:/recipe/show/"+savedRecipe.getRecipeId();
+	}
+
 
 }
