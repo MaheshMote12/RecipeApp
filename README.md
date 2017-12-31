@@ -1,2 +1,2 @@
 # RecipeApp
-Recipe application build with spring and hibernate
+Recipe application built with spring and hibernate
