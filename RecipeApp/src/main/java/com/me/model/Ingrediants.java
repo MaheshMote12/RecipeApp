@@ -2,6 +2,7 @@ package com.me.model;
 
 import java.math.BigDecimal;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -10,6 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import lombok.Data;
 import lombok.Getter;
@@ -29,13 +33,17 @@ public class Ingrediants {
 	private String description;
 	
 	@ManyToOne(targetEntity=Recipe.class, fetch=FetchType.LAZY)
+	@OnDelete(action=OnDeleteAction.CASCADE)
 	@Getter @Setter
 	private Recipe recipe;
 	
 	@Getter @Setter
 	private BigDecimal amount;
 
-	@OneToOne
+	/*@OneToOne(cascade={CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH,
+			CascadeType.MERGE}, fetch=FetchType.EAGER)*/
+	@OneToOne(cascade={CascadeType.ALL})
+	@OnDelete(action=OnDeleteAction.CASCADE)
 	@Getter @Setter
 	private UnitOfMeasure uom;
 	
@@ -56,4 +64,13 @@ public class Ingrediants {
 		this.amount = amount;
 		this.uom = uom;
 	}
+	
+	public void removeRecipe(){
+		this.recipe = null;
+	}
+	public void removeUnit(){
+		this.uom = null;
+	}
+	
+	
 }

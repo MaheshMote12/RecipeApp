@@ -63,6 +63,33 @@ public class RecipeRepositoryImpl implements RecipeRepository {
 		return recipe;
 	}
 
+	@Override
+	public List<String> findCategories() {
+
+		Session session = sessionFactory.openSession();
+		List<String> categories = session.createQuery("select c.categoryName FROM Category c", String.class)
+				.getResultList();
+		
+		System.out.println("TTTTTTTOOOOOOOOOOPPPPPPPPPP " +categories.size());
+		
+		return categories;
+	}
+
+	@Override
+	public void deleteById(Long l) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Recipe recipe = session.load(Recipe.class, l);
+		
+		session.delete(recipe);
+	/*	List<Ingrediants> list = recipe.getIngrediants();
+		for (Ingrediants ingrediants : list) {
+			session.delete(ingrediants);
+		}
+*/		
+		session.getTransaction().commit();
+	}
+
 	
 
 }

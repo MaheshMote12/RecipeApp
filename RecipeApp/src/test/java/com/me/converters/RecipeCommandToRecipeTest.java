@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -47,7 +46,7 @@ public class RecipeCommandToRecipeTest {
 		NotesCommand notesCommand = new NotesCommand();
 		notesCommand.setNotes("notes");
 		
-		command.setCategories(new HashSet<>());
+		command.setCategories(new ArrayList<>());
 		command.setCookTime(1);
 		command.setDescription("description");
 		command.setDirection("direction");

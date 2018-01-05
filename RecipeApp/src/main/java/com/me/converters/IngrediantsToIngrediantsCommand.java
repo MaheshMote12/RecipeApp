@@ -25,6 +25,7 @@ public class IngrediantsToIngrediantsCommand  implements Converter<Ingrediants,I
 		
 		final IngrediantsCommand command = new IngrediantsCommand();
 	
+		command.setId(ingrediants.getId());
 		command.setAmount(ingrediants.getAmount());
 		command.setDescription(ingrediants.getDescription());
 		command.setId(ingrediants.getId());

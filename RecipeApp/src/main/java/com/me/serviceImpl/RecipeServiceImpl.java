@@ -7,8 +7,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.me.command.RecipeCommand;
+import com.me.converters.CategoryCommandToCategory;
 import com.me.converters.RecipeCommandToRecipe;
 import com.me.converters.RecipeToRecipeCommand;
+import com.me.exceptions.CategoryNotFountException;
+import com.me.exceptions.RecipeNotFoundException;
 import com.me.model.Recipe;
 import com.me.model.UnitOfMeasure;
 import com.me.repository.RecipeRepository;
@@ -22,8 +25,12 @@ public class RecipeServiceImpl implements RecipeService{
 	
 	private RecipeToRecipeCommand toRecipeCommand;
 	
+	
 	@Autowired
 	private RecipeRepository recipeRepository;
+	
+	@Autowired
+	private CategoryCommandToCategory categoryToCommand;
 
 	
 	
@@ -73,6 +80,47 @@ public class RecipeServiceImpl implements RecipeService{
 	public List<Recipe> getRecipies() {
 		
 		return recipeRepository.getRecipies();
+	}
+
+	@Override
+	public List<String> getCategories() {
+
+		  List<String> categories = recipeRepository.findCategories();
+		  
+		 
+		
+		if(categories == null || categories.size() < 0 ){
+			throw new CategoryNotFountException("Category Not Found ");
+		}
+		
+		return categories;
+	}
+
+	@Override
+	public RecipeCommand updateRecipe(RecipeCommand recipeCommand) {
+
+		Recipe recipe = recipeRepository.save(toRecipe.convert(recipeCommand));
+		
+		
+		
+		return null;
+	}
+
+	@Override
+	public RecipeCommand findCommandById(Long id) {
+
+		Recipe findById = recipeRepository.findById(id);
+		RecipeCommand command = toRecipeCommand.convert(findById);
+		
+		return command;
+	}
+
+	@Override
+	public void deleteById(Long id) {
+		if(id == null){
+			throw new RecipeNotFoundException("No Recipe To Delete");
+		}
+		recipeRepository.deleteById(id);
 	}
 	
 }

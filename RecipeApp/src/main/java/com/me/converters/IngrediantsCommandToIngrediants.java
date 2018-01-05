@@ -1,5 +1,6 @@
 package com.me.converters;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +12,10 @@ import lombok.Synchronized;
 @Component
 public class IngrediantsCommandToIngrediants implements Converter<IngrediantsCommand, Ingrediants> {
 
+	@Autowired
+	private UnitOfMeasureCommandToUnitOfMeasure uom;
+	
+	
 	@Synchronized
 	@Override
 	public Ingrediants convert(IngrediantsCommand command) {
@@ -20,11 +25,11 @@ public class IngrediantsCommandToIngrediants implements Converter<IngrediantsCom
 		}
 		
 		final Ingrediants ingrediants = new Ingrediants();
+		ingrediants.setId(command.getId());
 		ingrediants.setAmount(command.getAmount());
 		ingrediants.setDescription(command.getDescription());
-		ingrediants.setId(ingrediants.getId());
-		ingrediants.setRecipe(ingrediants.getRecipe() );
-		ingrediants.setUom(ingrediants.getUom() );
+		ingrediants.setId(command.getId());
+		ingrediants.setUom(uom.convert(command.getUomC()) );
 	
 		return ingrediants;
 	}

@@ -1,7 +1,6 @@
 package com.me.converters;
 
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
@@ -42,7 +41,6 @@ public class RecipeCommandToRecipe implements Converter<RecipeCommand, Recipe> {
 		
 		recipe.setCookTime(command.getCookTime());
 		
-		
 		recipe.setDescription(command.getDescription());
 		
 		recipe.setDifficulty(command.getDifficulty());
@@ -60,7 +58,10 @@ public class RecipeCommandToRecipe implements Converter<RecipeCommand, Recipe> {
 		recipe.setSource(command.getSource());
 		recipe.setUrl(command.getUrl());
 		
-		Set<CategoryCommand> categories = command.getCategories();
+//		uncomment to get back to Set instead of List
+		/*Set<CategoryCommand> categories = command.getCategories();*/
+		
+		List<CategoryCommand> categories = command.getCategories();
 		
 		for (CategoryCommand categoryCommand : categories) {
 //			recipe.getCategories().add( categoryConverter.convert(categoryCommand) );
@@ -71,7 +72,6 @@ public class RecipeCommandToRecipe implements Converter<RecipeCommand, Recipe> {
 		List<IngrediantsCommand> ingrediants = command.getIngrediants();
 		
 		for (IngrediantsCommand ingrediantsCommand : ingrediants) {
-			
 			recipe.addIngredients(ingrediantsConverter.convert(ingrediantsCommand));
 		}
 		

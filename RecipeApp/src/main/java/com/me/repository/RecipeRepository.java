@@ -11,4 +11,6 @@ public interface RecipeRepository {
 	List<Recipe> getRecipies();
 	UnitOfMeasure getUom(String uom);
 	Recipe findById(Long id);
+	public List<String> findCategories();
+	void deleteById(Long l);
 }

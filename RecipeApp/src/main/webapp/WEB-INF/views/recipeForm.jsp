@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
         
-        <spring:url value="/recipe" var="recipeUrl"/>
+        <spring:url value="/recipe/recipeForm" var="recipeUrl"/>
             <form:form  action="${recipeUrl}"  modelAttribute="recipe" method="post">
  
 <%--                 <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
@@ -33,19 +33,67 @@
  
  							<div class="col-md-3 form-group">
  									<label for="${recipe.description}">Recipe Description:</label>
-                                    <input type="text" class="form-control" name="description" errorclass="has-error"/>
+                                    <form:input type="text" class="form-control" path="description" errorclass="has-error"/>
           <%--                           <span class="help-block" th:if="${#fields.hasErrors('description')}">
                                         <ul>
                                             <li th:each="err : ${#fields.errors('description')}" th:text="${err}"/>
                                         </ul>
                                     </span>
                                 </div>
-           --%>                  </div>
+           --%>              
+           
+           				</div>
+           				
+           					<div class="row">
+                                <div class="col-md-3 form-group">
+           				
+<%--            						<c:if test="${recipe.recipeId gt 0 }">
+           							<label>Recipe Id</label>
+											<form:input type="text" class="form-control" path="recipeId"  errorclass="has-error"/>           						
+           						</c:if>
+ --%>           				
+           						<form:input type="hidden" path="recipeId" />
+           						</div>
+           				</div>
+           				
+           				
+           				
+           				
                             <div class="row">
                                 <div class="col-md-3 form-group">
                                     <label>Categories:</label>
                                 </div>
-                                <div class="col-md-3 form-group">
+                                
+                                
+                                <%-- <form:checkboxes items="${cate}" path="categories.categoryName"/> --%>
+                                
+<%--                                 <c:forEach items="${cate}" var="t" >
+                                        <label>
+                                            <input type="checkbox" value="${t.categoryName}" name="${t.categoryName}"/>
+                                            ${t.categoryName}
+                                        </label>
+                                	
+                                
+                                </c:forEach>
+ --%>                                
+     
+								 <c:forEach items="${cate}" var="category" varStatus="status">
+                                        <label>
+                                            <%-- <input type="checkbox" value="${category}" name="categories[${status.index}].categoryName"/> --%>
+                                            
+                                            <%-- <form:input type="checkbox" value="${category}" path="categories[${status.index}].categoryName"/> --%>
+
+                                            <%-- <form:checkboxes items="${cate}"  path="categories[${status.index}].categoryName"/> --%>
+                                            <form:checkbox value="${category}" path="categories[${status.index}].categoryName"/> 
+                                            
+                                            ${category} 
+                                        </label>
+                                </c:forEach> 
+     
+     
+     
+     
+<!--                                 <div class="col-md-3 form-group">
                                     <div class="radio">
                                         <label>
                                             <input type="checkbox" value=""/>
@@ -59,7 +107,7 @@
                                         </label>
                                     </div>
                                 </div>
-                            </div>
+ -->                            </div>
                             <div class="row">
 <%--                                 <div class="col-md-3 form-group" th:class="${#fields.hasErrors('prepTime')}
                                 ? 'col-md-3 form-group has-error' : 'col-md-3 form-group'">
@@ -68,7 +116,7 @@
  	
  							<div class="col-md-3 form-group">
  									<label>Prep Time:</label>
-                                    <input type="text" class="form-control" name="prepTime" errorclass="has-error"/>
+                                    <form:input type="text" class="form-control" path="prepTime" errorclass="has-error"/>
      <%--                                <span class="help-block" th:if="${#fields.hasErrors('prepTime')}">
                                         <ul>
                                             <li th:each="err : ${#fields.errors('prepTime')}" th:text="${err}"/>
@@ -81,7 +129,7 @@
            
            						<div class="col-md-3 form-group">
            						<label>Cooktime:</label>
-                                    <input type="text" class="form-control" name="cookTime" errorclass="has-error"/>
+                                    <form:input type="text" class="form-control" path="cookTime" errorclass="has-error"/>
                <%--                      <span class="help-block" th:if="${#fields.hasErrors('cookTime')}">
                                         <ul>
                                             <li th:each="err : ${#fields.errors('cookTime')}" th:text="${err}"/>
@@ -126,7 +174,7 @@
  
  							<div class="col-md-3 form-group">
  								<label>Servings:</label>
-                                    <input type="text" class="form-control" name="servings" th:errorclass="has-error"/>
+                                    <form:input type="text" class="form-control" path="servings" cssClass="has-error"/>
 <%--                                     <span class="help-block" th:if="${#fields.hasErrors('servings')}">
                                         <ul>
                                             <li th:each="err : ${#fields.errors('servings')}" th:text="${err}"/>
@@ -138,7 +186,7 @@
  
                                  <div class="col-md-3 form-group">
                                     <label>Source:</label>
-                                    <input type="text" class="form-control" name="source"/>
+                                    <form:input type="text" class="form-control" path="source"/>
                                 </div>
      <%--                            <div class="col-md-3 form-group" th:class="${#fields.hasErrors('url')}
                                 ? 'col-md-3 form-group has-error' : 'col-md-3 form-group'">
@@ -146,7 +194,7 @@
       --%>                               
       							<div class="col-md-3 form-group">
       								<label>URL:</label>
-                                    <input type="text" class="form-control" name="url" />
+                                    <form:input type="text" class="form-control" path="url" />
           <%--                           <span class="help-block" th:if="${#fields.hasErrors('url')}">
                                         <ul>
                                             <li th:each="err : ${#fields.errors('url')}" th:text="${err}"/>
@@ -164,25 +212,59 @@
                                 </div>
                                  <div class="col-md-1">
                                     <a class="btn btn-default" href="#"
-                                       th:href="${pageContext.servletContext.contextPath}/recipe/${recipe.recipeId}/ingrediants <%--  @{'/recipe/' + ${recipe.id} + '/ingredients'} --%>" role="button">View</a>
+                                    
+                                       th:href="${pageContext.servletContext.contextPath}/recipe/${recipe.recipeId}/ingrediants <%--  @{'/recipe/' + ${recipe.id} + '/ingredients'} --%>" role="button">Edit</a>
                                 </div>
                         </div>
                         </div>
                         <div class="panel-body">
                             <div class="row">
-     <%--                            <div class="col-md-12">
-                                    <ul th:if="${not #lists.isEmpty(recipe.ingredients)}">
+                                 <div class="col-md-12">
+                                    <%-- <ul th:if="${not #lists.isEmpty(recipe.ingredients)}">
                                         <li th:remove="all">1 Cup of milk</li>
                                         <li th:remove="all">1 Teaspoon of chocolate</li>
                                         <li th:remove="all">asdf</li>
-                                        <li th:each="ingredient : ${recipe.ingredients}"
-                                            th:text="${(ingredient.getAmount() +
+ --%>                                        
+                                       <ul>
+                                       <%-- <c:set value="${recipe.ingrediants }" var="ig" ></c:set> --%>
+                                       
+                                          <%-- <c:forEach items="${ingrediants}" var="ig" varStatus="status" >   --%>
+                                        	
+                                        	
+                                        <li >
+                                     		<form:input type="hidden" path="ingrediants[0].id" />    	
+                                     		<form:input type="hidden" path="ingrediants[0].uomC.id" />
+                                     		
+                                     		
+                                        	<label>Amount:</label>
+                                    		<form:input type="text" class="form-control" path="ingrediants[0].amount" />
+                                    		
+
+											<label>Unit Of Measure:</label>
+                                    		<form:input type="text" class="form-control" path="ingrediants[0].uomC.unit" />
+
+
+											<label>Description:</label>
+                                    		<form:input type="text" class="form-control" path="ingrediants[0].description" />
+                                    		
+                                       	<%--  ${ingredients.getAmount() + ' ' + ingredients.getDescription()+ ' ' + ingredients.getUomC() } --%>
+                                        </li>
+                                        
+								<%-- </c:forEach> --%> 
+                                        	
+                                        
+<%--                                      </c:forEach>  --%>
+                                        
+                                        
+                                        
+<%--                                         <li th:each="ingredient : ${recipe.ingredients}"
+                                            th:text="${(ingredient.getAmmount() +
                                         ' ' + ingredient.uom.getDescription() +
                                         ' - ' + ingredient.getDescription())}">1 Teaspoon of Sugar
                                         </li>
-                                    </ul>
+ --%>                                    </ul>
                                 </div>
-      --%>                       </div>
+      						</div>
                         </div>
                     </div>
                     <div class="panel panel-primary">
@@ -204,7 +286,11 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-12 form-group">
-                                    <textarea class="form-control" rows="3" name="notes.notes"></textarea>
+                                
+                                <form:input type="hidden" path="notes.id" />
+                                
+                                
+                                    <form:textarea class="form-control" rows="3" path="notes.notes"></form:textarea>
                                 </div>
                             </div>
                         </div>

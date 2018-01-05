@@ -12,6 +12,7 @@ import com.me.model.Difficulty;
 import com.me.model.Ingrediants;
 import com.me.model.Notes;
 import com.me.model.Recipe;
+import com.me.model.UnitOfMeasure;
 import com.me.repository.RecipeRepository;
 import com.me.service.RecipeService;
 
@@ -53,12 +54,25 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 		Ingrediants ingrd = new Ingrediants();
 		ingrd.setAmount(new BigDecimal(55));
 		ingrd.setDescription("evey single ingrediant brings delicious taste in the food ");
-		ingrd.setUom(recipeService.getUOM("scoop"));
+//		ingrd.setUom(recipeService.getUOM("scoop"));
+		
+		UnitOfMeasure uom = new UnitOfMeasure("delicious");
+		
+		ingrd.setUom(uom);
+		
+		
 		
 		Ingrediants ingrd2 = new Ingrediants();
 		ingrd2.setAmount(new BigDecimal(75));
 		ingrd2.setDescription("all the ingrediaents in this recipe are very healthy ");
-		ingrd2.setUom(recipeService.getUOM("tea spoon"));
+//		ingrd2.setUom(recipeService.getUOM("tea spoon"));
+
+		UnitOfMeasure uom2 = new UnitOfMeasure("tasty");
+
+		ingrd.setUom(uom2);
+
+		
+		
 		
 		Notes note1 = new Notes();
 		note1.setNotes("very tasty");

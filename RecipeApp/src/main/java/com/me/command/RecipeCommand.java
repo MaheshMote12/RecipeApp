@@ -1,9 +1,7 @@
 package com.me.command;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Lob;
 
@@ -33,8 +31,8 @@ public class RecipeCommand {
 	@Getter @Setter
 	private String url;
 	
-	@Getter @Setter
-	private Set<CategoryCommand> categories = new HashSet<>();
+//	@Getter @Setter
+//	private Set<CategoryCommand> categories = new HashSet<>();
 	
 	@Getter @Setter
 	private NotesCommand notes;
@@ -52,4 +50,6 @@ public class RecipeCommand {
 	@Getter @Setter
 	private String direction;
 	
+	@Getter @Setter
+	List<CategoryCommand> categories = new ArrayList<>();
 }
