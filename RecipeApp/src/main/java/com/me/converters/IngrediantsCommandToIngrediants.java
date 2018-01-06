@@ -15,6 +15,8 @@ public class IngrediantsCommandToIngrediants implements Converter<IngrediantsCom
 	@Autowired
 	private UnitOfMeasureCommandToUnitOfMeasure uom;
 	
+	@Autowired
+	private RecipeCommandToRecipe toRecipe;
 	
 	@Synchronized
 	@Override
@@ -31,6 +33,11 @@ public class IngrediantsCommandToIngrediants implements Converter<IngrediantsCom
 		ingrediants.setId(command.getId());
 		ingrediants.setUom(uom.convert(command.getUomC()) );
 	
+		
+//		deadlock?
+//		ingrediants.setRecipe(toRecipe.convert(command.getRecipeCommand()));
+		
+		
 		return ingrediants;
 	}
 }

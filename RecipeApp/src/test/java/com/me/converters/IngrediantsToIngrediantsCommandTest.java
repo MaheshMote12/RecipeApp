@@ -15,6 +15,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 import com.me.command.IngrediantsCommand;
 import com.me.model.Ingrediants;
+import com.me.model.Recipe;
 
 @RunWith(PowerMockRunner.class)
 public class IngrediantsToIngrediantsCommandTest {
@@ -39,7 +40,7 @@ public class IngrediantsToIngrediantsCommandTest {
 
 	@Test
 	public void testEmptyObject() {
-		converter.convert(new Ingrediants());
+		converter.convert(null);
 	}
 
 	@Test
@@ -48,6 +49,12 @@ public class IngrediantsToIngrediantsCommandTest {
 		Ingrediants ingrediants = new Ingrediants();
 		ingrediants.setDescription("spicy");
 		ingrediants.setId(1l);
+		
+		Recipe recipe = new Recipe();
+		recipe.setRecipeId(1l);
+		ingrediants.setRecipe(recipe );
+		
+		
 		
 		IngrediantsCommand command = converter.convert(ingrediants);
 		

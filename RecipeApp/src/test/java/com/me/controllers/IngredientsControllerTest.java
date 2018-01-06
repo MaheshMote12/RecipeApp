@@ -9,20 +9,29 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import com.me.command.IngrediantsCommand;
 import com.me.command.RecipeCommand;
+import com.me.command.UnitOfMeasureCommand;
+import com.me.service.IngredientService;
 import com.me.service.RecipeService;
 
 @RunWith(PowerMockRunner.class)
 public class IngredientsControllerTest {
 
+	@Mock
+	private IngredientService ingredientService;
 	
 	@Mock
 	private RecipeService recipeService;
@@ -31,12 +40,14 @@ public class IngredientsControllerTest {
 	
 	@Before
 	public void before(){
-		controller = new IngredientsController(recipeService);
+		MockitoAnnotations.initMocks(this);
+		
+		controller = new IngredientsController(recipeService, ingredientService);
 	}
 	
 	
 	@Test
-	public void viewIngredientsTest() throws Exception{
+	public void testListIngredients() throws Exception{
 		
 		RecipeCommand command = new RecipeCommand();
 		
@@ -51,6 +62,52 @@ public class IngredientsControllerTest {
 		verify(recipeService, times(1)).findCommandById(anyLong());
 		
 		
+	}
+	
+	@Test
+	public void testShowIngredient() throws Exception{
+		
+		IngrediantsCommand command = new IngrediantsCommand();
+		command.setId(1l);
+		
+		when(ingredientService.findByRecipeIdAndIngredientId(anyLong(), anyLong())).thenReturn(command);
+		
+		
+		MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+		
+		mockMvc.perform(get("/recipe/1/ingredient/2/show")).andExpect(view().name("showIngredient"))
+				.andExpect(status().isOk()).andExpect(model().attributeExists("ingredient"));	
+		
+		verify(ingredientService, times(1)).findByRecipeIdAndIngredientId(anyLong(), anyLong());
+	
+	}
+	
+	@Test
+	public  void testUpdateRecipeIngredieant() throws Exception{
+		
+//given
+		MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+		
+		
+		
+		IngrediantsCommand command = new IngrediantsCommand();
+		command.setId(1l);
+		
+		List<UnitOfMeasureCommand> list = Arrays.asList( new UnitOfMeasureCommand());
+		
+		when(ingredientService.listAllUoms()).thenReturn(list);
+		
+		when(ingredientService.findByRecipeIdAndIngredientId(anyLong(), anyLong())).thenReturn(command);
+
+//		when
+		mockMvc.perform(get("/recipe/1/ingredient/1/update")).andExpect(view().name("ingredientForm"))
+		.andExpect(status().isOk()).andExpect(model().attributeExists("ingredient")).andExpect(model().attributeExists("uoms"));
+		
+	
+//then
+	verify(ingredientService, times(1)).findByRecipeIdAndIngredientId(anyLong(), anyLong());
+	verify(ingredientService, times(1)).listAllUoms();
+	
 	}
 	
 	

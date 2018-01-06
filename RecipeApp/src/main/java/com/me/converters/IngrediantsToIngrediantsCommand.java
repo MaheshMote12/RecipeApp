@@ -29,7 +29,7 @@ public class IngrediantsToIngrediantsCommand  implements Converter<Ingrediants,I
 		command.setAmount(ingrediants.getAmount());
 		command.setDescription(ingrediants.getDescription());
 		command.setId(ingrediants.getId());
-		
+		command.setRecipeId( ingrediants.getRecipe().getRecipeId());
 
 //		no need of travelling from ingredients to recipe for front end, right?
 /*		command.setRecipeCommand(  recipeConverter.convert(ingrediants.getRecipe()) );

@@ -67,6 +67,10 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 		ingrd2.setDescription("all the ingrediaents in this recipe are very healthy ");
 //		ingrd2.setUom(recipeService.getUOM("tea spoon"));
 
+		ingrd2.setUom( repo.getUom("Cup"));
+		ingrd2.setUom( repo.getUom("Bottle"));
+		ingrd2.setUom( repo.getUom("Tab"));
+		ingrd2.setUom( repo.getUom("Each"));
 		UnitOfMeasure uom2 = new UnitOfMeasure("tasty");
 
 		ingrd.setUom(uom2);

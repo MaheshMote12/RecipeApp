@@ -37,8 +37,9 @@ public class RecipeRepositoryImpl implements RecipeRepository {
 	@Override
 	public List<Recipe> getRecipies() {
 		Session session = sessionFactory.openSession();
-		
 		List<Recipe> list = session.createQuery("from Recipe r", Recipe.class).getResultList();
+		
+//		List<Recipe> list = session.createQuery("from Recipe r JOIN Fetch r.notes n ", Recipe.class).getResultList();
 		return list;
 	}
 
@@ -59,6 +60,11 @@ public class RecipeRepositoryImpl implements RecipeRepository {
 
 		Session session = sessionFactory.openSession();
 		Recipe recipe = session.get(Recipe.class, id);
+		
+//		List<Recipe> list = session.createQuery("select r from Recipe r JOIN FETCH r.ingrediants where r.recipeId =:id", Recipe.class).setParameter("id", id).getResultList();
+		
+//		return list.get(0);
+		
 		
 		return recipe;
 	}

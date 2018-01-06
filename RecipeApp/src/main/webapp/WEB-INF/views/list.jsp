@@ -38,7 +38,7 @@
                             
 	                                <td>${ingr.id }</td>
 	                                <td>${ingr.description}</td>
-	                                <td><a href="#">View</a></td>
+	                                <td><a href="${pageContext.servletContext.contextPath}/recipe/${recipe.recipeId}/ingredient/${ingr.id}/show">View</a></td>
 	                                <td><a href="#">Update</a></td>
 	                                <td><a href="#">Delete</a></td>
                             </tr>
