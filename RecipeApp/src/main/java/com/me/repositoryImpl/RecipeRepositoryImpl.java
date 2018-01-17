@@ -25,11 +25,13 @@ public class RecipeRepositoryImpl implements RecipeRepository {
 	public Recipe save(Recipe recipe) {
 		Session session = sessionFactory.openSession();
 		
+
 		session.beginTransaction();
 		session.saveOrUpdate(recipe);
 		session.flush();
 		session.getTransaction().commit();
 		
+		session.close();
 		return recipe;
 	
 	}
@@ -40,6 +42,7 @@ public class RecipeRepositoryImpl implements RecipeRepository {
 		List<Recipe> list = session.createQuery("from Recipe r", Recipe.class).getResultList();
 		
 //		List<Recipe> list = session.createQuery("from Recipe r JOIN Fetch r.notes n ", Recipe.class).getResultList();
+		
 		return list;
 	}
 
@@ -51,6 +54,7 @@ public class RecipeRepositoryImpl implements RecipeRepository {
 									.setParameter("unit", uom)
 										.getResultList();
 		
+		session.close();
 		return list.get(0);
 		
 	}
@@ -59,8 +63,9 @@ public class RecipeRepositoryImpl implements RecipeRepository {
 	public Recipe findById(Long id) {
 
 		Session session = sessionFactory.openSession();
-		Recipe recipe = session.get(Recipe.class, id);
 		
+
+		Recipe recipe = session.get(Recipe.class, id);
 //		List<Recipe> list = session.createQuery("select r from Recipe r JOIN FETCH r.ingrediants where r.recipeId =:id", Recipe.class).setParameter("id", id).getResultList();
 		
 //		return list.get(0);
@@ -76,9 +81,9 @@ public class RecipeRepositoryImpl implements RecipeRepository {
 		List<String> categories = session.createQuery("select c.categoryName FROM Category c", String.class)
 				.getResultList();
 		
-		System.out.println("TTTTTTTOOOOOOOOOOPPPPPPPPPP " +categories.size());
+		System.out.println("TTTTTTTOTTTdddddOOOOOOOTTTTTTTTTTOOPTTTTTTTTTPPPPPPPPP " +categories.size());
 		
-		return categories;
+		return categories;    
 	}
 
 	@Override
@@ -96,6 +101,22 @@ public class RecipeRepositoryImpl implements RecipeRepository {
 		session.getTransaction().commit();
 	}
 
+	@Override
+	public Recipe mergeRecipe(Recipe recipe) {
+
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		
+		 Recipe merge = (Recipe)session.merge(recipe);
+		
+		 session.flush();
+		 session.getTransaction().commit();
+		return merge;
+	
+	
+	}
+
+	
 	
 
 }

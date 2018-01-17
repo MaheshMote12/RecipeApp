@@ -34,7 +34,6 @@ public class IngredientRepositoryImpl implements IngredientRepository {
 		
 		Query<Ingrediants> query = session.createQuery(" SELECT I FROM Ingrediants I where I.recipe.recipeId =:recipeId and I.id =:ingrId ", Ingrediants.class);
 		
-		System.out.println("IN INGREDIENT REPOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
 		
 		query.setParameter("recipeId", recipeId);
 		query.setParameter("ingrId", ingrediantsId);
@@ -60,7 +59,18 @@ public class IngredientRepositoryImpl implements IngredientRepository {
 		List<UnitOfMeasure> list = session.createQuery("FROM UnitOfMeasure I", UnitOfMeasure.class).getResultList();
 		
 		return list;
-		
+		        
+	}
+
+
+	@Override
+	public void deleteIngredientByRecipeIdIngrId(long recipeId, long ingrId) {
+
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		session.createQuery("delete from Ingrediants i where i.recipe.recipeId =:recipeId and i.id =:id")
+				.setParameter("recipeId", recipeId).setParameter("id", ingrId).executeUpdate();
+		session.getTransaction().commit();
 	}
 
 }

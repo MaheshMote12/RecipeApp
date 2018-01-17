@@ -30,7 +30,6 @@ public class IngrediantsCommandToIngrediants implements Converter<IngrediantsCom
 		ingrediants.setId(command.getId());
 		ingrediants.setAmount(command.getAmount());
 		ingrediants.setDescription(command.getDescription());
-		ingrediants.setId(command.getId());
 		ingrediants.setUom(uom.convert(command.getUomC()) );
 	
 		

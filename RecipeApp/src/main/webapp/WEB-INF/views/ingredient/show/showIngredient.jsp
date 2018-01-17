@@ -18,7 +18,7 @@
                             <h1 class="panel-title">Ingredient</h1>
                         </div>
                         <div class="col-md-1">
-                            <a class="btn btn-default" href="#" <%-- th:href="@{'/recipe/' + ${recipe.recipeId} + '/ingredient/new'}"  --%>role="button">New</a>
+                            <a class="btn btn-default" href="${pageContext.servletContext.contextPath}/recipe/${ingredient.recipeId}/ingredient/new" <%-- th:href="@{'/recipe/' + ${recipe.recipeId} + '/ingredient/new'}"  --%>role="button">New</a>
                         </div>
                     </div>
 
@@ -43,7 +43,7 @@
 	                                <td>${ingredient.description}</td>
 	                                <td><a href="#">View</a></td>
 	                                <td><a href="${pageContext.servletContext.contextPath}/recipe/${ingredient.recipeId}/ingredient/${ingredient.id}/update">Update</a></td>
-	                                <td><a href="#">Delete</a></td>
+	                                <td><a href="${pageContext.servletContext.contextPath}/recipe/${ingredient.recipeId}/ingredient/${ingredient.id}/delete">Delete</a></td>
                             </tr>
 
 

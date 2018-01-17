@@ -35,6 +35,7 @@ public class RecipeController
 	@RequestMapping(value = {"/", "/index", ""}, method = RequestMethod.GET)
 	public String indexPage( Model model) {
 
+		System.out.println("##################################################");
 		
 		log.info("i am in controller class");
 		
@@ -79,12 +80,12 @@ public class RecipeController
 			l.addAll(recipe.getCategories());
 		}
 		
-		
+		   
 		
 		
 		model.addAttribute("cate", l);
 */		
-		
+		System.out.println("HHHHHHHHHHHHHHHHHHHppppppppppppppppppHHHJJJJHHHHH");
 		List<String> categories = recipeService.getCategories();
 		
 		model.addAttribute("cate", recipeService.getCategories());

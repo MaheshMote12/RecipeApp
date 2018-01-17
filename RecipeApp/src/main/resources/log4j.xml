@@ -9,11 +9,16 @@
 			<param name="ConversionPattern" value="%-5p: %c - %m%n" />
 		</layout>
 	</appender>
-	
-	<!-- Application Loggers -->
+<!-- 	log4j.logger.org.hibernate.event.internal.EntityCopyAllowedLoggedObserver=DEBUG
+ -->	<!-- Application Loggers -->
 	<logger name="com.me.g">
 		<level value="info" />
 	</logger>
+
+	<logger name="org.hibernate.event.internal.EntityCopyAllowedLoggedObserver">
+		<level value="DEBUG" />
+	</logger>
+
 	
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">

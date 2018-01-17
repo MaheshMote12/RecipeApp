@@ -6,13 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.me.model.Category;
 import com.me.model.Difficulty;
 import com.me.model.Ingrediants;
 import com.me.model.Notes;
 import com.me.model.Recipe;
-import com.me.model.UnitOfMeasure;
 import com.me.repository.RecipeRepository;
 import com.me.service.RecipeService;
 
@@ -34,6 +34,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 		this.recipeService = recipeService;
 	}
 
+	@Transactional
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		
@@ -56,9 +57,8 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 		ingrd.setDescription("evey single ingrediant brings delicious taste in the food ");
 //		ingrd.setUom(recipeService.getUOM("scoop"));
 		
-		UnitOfMeasure uom = new UnitOfMeasure("delicious");
 		
-		ingrd.setUom(uom);
+		ingrd.setUom( repo.getUom("Tab"));
 		
 		
 		
@@ -71,9 +71,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 		ingrd2.setUom( repo.getUom("Bottle"));
 		ingrd2.setUom( repo.getUom("Tab"));
 		ingrd2.setUom( repo.getUom("Each"));
-		UnitOfMeasure uom2 = new UnitOfMeasure("tasty");
 
-		ingrd.setUom(uom2);
 
 		
 		

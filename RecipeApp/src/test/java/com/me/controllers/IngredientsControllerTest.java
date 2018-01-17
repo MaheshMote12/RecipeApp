@@ -1,10 +1,12 @@
 package com.me.controllers;
 
 import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
@@ -110,5 +112,56 @@ public class IngredientsControllerTest {
 	
 	}
 	
+	@Test
+	public void testSaveOrUpdate() throws Exception{
+		
+		IngrediantsCommand command = new IngrediantsCommand();
+		command.setRecipeId(1l);
+		command.setId(1l);
+		
+		when(ingredientService.saveIngredientCommand(anyObject())).thenReturn( command);
+		
+		MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+		mockMvc.perform( post("/recipe/1/ingredient"))
+				 .andExpect( status().is3xxRedirection() )
+				  .andExpect( view().name("redirect:/recipe/1/ingredient/1/show"));
+	
+		
+//		then
+		verify(ingredientService, times(1)).saveIngredientCommand(anyObject());
+		
+	}
+	
+	@Test
+	public void testAddIngredient() throws Exception{
+		
+		MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+		
+		when(recipeService.findCommandById(anyLong())).thenReturn(new RecipeCommand());
+		
+		mockMvc.perform( get("/recipe/1/ingredient/new") )
+			    .andExpect( status().isOk() ).andExpect(view().name("ingredientForm"))
+			     .andExpect(model().attributeExists("ingredient"));
+		
+		verify(recipeService, times(1)).findCommandById(anyLong());
+		
+	}
+	
+	@Test
+	public void testDeletIngredient() throws Exception{
+		
+		MockMvc build = MockMvcBuilders.standaloneSetup(controller).build();
+		
+		
+//		when(ingredientService.deleteById(anyLong()));
+		
+		build.perform( get("/recipe/1/ingredient/1/delete"))
+	      .andExpect( status().is3xxRedirection())
+		.andExpect( view().name("redirect:/recipe/1/ingredients"));
+		
+ 
+		
+		
+	}
 	
 }

@@ -13,7 +13,7 @@
                             <h1 class="panel-title">Ingredients</h1>
                         </div>
                         <div class="col-md-1">
-                            <a class="btn btn-default" href="#" <%-- th:href="@{'/recipe/' + ${recipe.recipeId} + '/ingredient/new'}"  --%>role="button">New</a>
+                            <a class="btn btn-default" href="${pageContext.servletContext.contextPath}/recipe/${recipe.recipeId}/ingredient/new" <%-- th:href="@{'/recipe/' + ${recipe.recipeId} + '/ingredient/new'}"  --%>role="button">New</a>
                         </div>
                     </div>
 

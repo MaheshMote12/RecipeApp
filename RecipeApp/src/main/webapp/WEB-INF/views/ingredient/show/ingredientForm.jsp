@@ -15,17 +15,17 @@
             
             
             
-            <form:form  modelAttribute="ingredient" action="${pageContext.servletContext.contextPath}/recipe/${ingredient.getRecipeId()}/ingredient'} " method="post">
+            <form:form  modelAttribute="ingredient" action="${pageContext.servletContext.contextPath}/recipe/${ingredient.recipeId}/ingredient " method="post">
             
-            
-<%--                 <form:input type="hidden" path="${id}"/>
+             
+<%--                  <form:input type="hidden" path="${id}"/>
 				<form:input type="hidden" path="${recipeId}"/>
  --%> 
  
  
-				<input type="hidden" name="id" value="${id}"/>
-				<input type="hidden" name="recipeId" value="${recipeId}"/>
- 
+				<form:input type="hidden" path="id" value="${id}"/>
+				<form:input type="hidden" path="recipeId" value="${recipeId}"/>
+				<%--  <form:input type="hidden" path="uomC.id" value="${uomC.id}"/>  --%>
                 
                 <div class="pannel-group">
                     <div class="panel panel-primary">
@@ -48,21 +48,27 @@
 
                                 <div class="col-md-3 form-group">
                                     <label>UOM:</label>
+
+
+										<!-- when clicked on update ingredient -->
+
+
                                     
-                                     <select class="form-control" name="uom.id">
-                                    <c:forEach items="${uoms}" var="uom" varStatus="status">
+                                     <form:select path="uomC.id" class="form-control" >
                                     
-                                    
-                                    <%-- <form:select path="uomC.unit"  items="${uom}"></form:select> --%>
-
-                                        <option  value="${uom.unit}" selected="${uom.id.equals(uomC.id)}">${uom.unit }</option>
+                                    	<c:forEach items="${uoms}" var="uom" varStatus="status">
+	
 
 
-                                    </c:forEach>
-
-
-                                    </select> 
-                                    
+        	                                <form:option  value="${uom.id}" >${uom.unit }</form:option>
+    	                                    
+	                                    </c:forEach>
+	                                    
+                                    </form:select> 
+										
+										<!-- when clicked on new ingredient-->
+										
+										                                    
                                     
 <%--                                     <select class="form-control" name="uom.id">
                                         <option th:each="uomEach : ${uomList}"

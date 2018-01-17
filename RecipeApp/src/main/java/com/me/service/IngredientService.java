@@ -11,4 +11,10 @@ public interface IngredientService {
 
 	List<UnitOfMeasureCommand> listAllUoms();
 
+	IngrediantsCommand saveIngredientCommand(IngrediantsCommand ingrCommand);
+
+	void deleteByRecipeIdAndIngredientId(long recipeId, long ingrId);
+
+	
+	
 }

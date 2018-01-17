@@ -13,4 +13,5 @@ public interface RecipeRepository {
 	Recipe findById(Long id);
 	public List<String> findCategories();
 	void deleteById(Long l);
+	Recipe mergeRecipe(Recipe recipe);
 }
