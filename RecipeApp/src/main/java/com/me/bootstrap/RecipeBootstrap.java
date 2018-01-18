@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.me.model.Category;
 import com.me.model.Difficulty;
@@ -33,6 +34,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 		this.recipeService = recipeService;
 	}
 
+	@Transactional
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		
@@ -53,12 +55,26 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 		Ingrediants ingrd = new Ingrediants();
 		ingrd.setAmount(new BigDecimal(55));
 		ingrd.setDescription("evey single ingrediant brings delicious taste in the food ");
-		ingrd.setUom(recipeService.getUOM("scoop"));
+//		ingrd.setUom(recipeService.getUOM("scoop"));
+		
+		
+		ingrd.setUom( repo.getUom("Tab"));
+		
+		
 		
 		Ingrediants ingrd2 = new Ingrediants();
 		ingrd2.setAmount(new BigDecimal(75));
 		ingrd2.setDescription("all the ingrediaents in this recipe are very healthy ");
-		ingrd2.setUom(recipeService.getUOM("tea spoon"));
+//		ingrd2.setUom(recipeService.getUOM("tea spoon"));
+
+		ingrd2.setUom( repo.getUom("Cup"));
+		ingrd2.setUom( repo.getUom("Bottle"));
+		ingrd2.setUom( repo.getUom("Tab"));
+		ingrd2.setUom( repo.getUom("Each"));
+
+
+		
+		
 		
 		Notes note1 = new Notes();
 		note1.setNotes("very tasty");

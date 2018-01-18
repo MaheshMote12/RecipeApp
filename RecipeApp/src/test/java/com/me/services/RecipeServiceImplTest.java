@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -17,6 +18,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import com.me.command.RecipeCommand;
 import com.me.converters.RecipeCommandToRecipe;
 import com.me.converters.RecipeToRecipeCommand;
 import com.me.model.Recipe;
@@ -78,4 +80,33 @@ public class RecipeServiceImplTest {
 		fail("Not yet implemented");
 	}
 */
+	
+	@Test
+	public void findCommandByIdTest(){
+		
+		
+		when(recipeRepo.findById(anyLong())).thenReturn(anyObject());
+		when(toRecipeCommand.convert(new Recipe())).thenReturn(new RecipeCommand());
+		
+		
+		RecipeCommand recipeCommand = recipeService.findCommandById(anyLong());
+		
+		verify(recipeRepo, times(1)).findById(anyLong());
+		verify(toRecipeCommand, times(1)).convert(anyObject());
+	}
+
+	
+	@Test
+	public void deleteByIdTest(){
+		
+//		given
+		
+//		when
+		recipeService.deleteById(Long.valueOf(2));
+		
+//		then
+		verify(recipeRepo, times(1)).deleteById(anyLong());
+	}
+	
+	
 }

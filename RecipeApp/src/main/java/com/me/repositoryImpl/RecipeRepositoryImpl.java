@@ -25,11 +25,13 @@ public class RecipeRepositoryImpl implements RecipeRepository {
 	public Recipe save(Recipe recipe) {
 		Session session = sessionFactory.openSession();
 		
+
 		session.beginTransaction();
 		session.saveOrUpdate(recipe);
 		session.flush();
 		session.getTransaction().commit();
 		
+		session.close();
 		return recipe;
 	
 	}
@@ -37,8 +39,10 @@ public class RecipeRepositoryImpl implements RecipeRepository {
 	@Override
 	public List<Recipe> getRecipies() {
 		Session session = sessionFactory.openSession();
-		
 		List<Recipe> list = session.createQuery("from Recipe r", Recipe.class).getResultList();
+		
+//		List<Recipe> list = session.createQuery("from Recipe r JOIN Fetch r.notes n ", Recipe.class).getResultList();
+		
 		return list;
 	}
 
@@ -50,6 +54,7 @@ public class RecipeRepositoryImpl implements RecipeRepository {
 									.setParameter("unit", uom)
 										.getResultList();
 		
+		session.close();
 		return list.get(0);
 		
 	}
@@ -58,11 +63,60 @@ public class RecipeRepositoryImpl implements RecipeRepository {
 	public Recipe findById(Long id) {
 
 		Session session = sessionFactory.openSession();
+		
+
 		Recipe recipe = session.get(Recipe.class, id);
+//		List<Recipe> list = session.createQuery("select r from Recipe r JOIN FETCH r.ingrediants where r.recipeId =:id", Recipe.class).setParameter("id", id).getResultList();
+		
+//		return list.get(0);
+		
 		
 		return recipe;
 	}
 
+	@Override
+	public List<String> findCategories() {
+
+		Session session = sessionFactory.openSession();
+		List<String> categories = session.createQuery("select c.categoryName FROM Category c", String.class)
+				.getResultList();
+		
+		System.out.println("TTTTTTTOTTTdddddOOOOOOOTTTTTTTTTTOOPTTTTTTTTTPPPPPPPPP " +categories.size());
+		
+		return categories;    
+	}
+
+	@Override
+	public void deleteById(Long l) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Recipe recipe = session.load(Recipe.class, l);
+		
+		session.delete(recipe);
+	/*	List<Ingrediants> list = recipe.getIngrediants();
+		for (Ingrediants ingrediants : list) {
+			session.delete(ingrediants);
+		}
+*/		
+		session.getTransaction().commit();
+	}
+
+	@Override
+	public Recipe mergeRecipe(Recipe recipe) {
+
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		
+		 Recipe merge = (Recipe)session.merge(recipe);
+		
+		 session.flush();
+		 session.getTransaction().commit();
+		return merge;
+	
+	
+	}
+
+	
 	
 
 }

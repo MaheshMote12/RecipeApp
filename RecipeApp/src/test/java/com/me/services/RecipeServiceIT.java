@@ -66,6 +66,15 @@ public class RecipeServiceIT {
 		
 	}
 
+	
+	@Test
+	public void testGetUOM() {
+	
+		recipeService.getCategories();
+	
+	}
+	
+	
 /*	@Test
 	public void testGetUOM() {
 		fail("Not yet implemented");

@@ -4,9 +4,11 @@ import java.math.BigDecimal;
 
 import javax.persistence.Lob;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+@Data
 public class IngrediantsCommand {
 
 	@Getter @Setter
@@ -17,7 +19,7 @@ public class IngrediantsCommand {
 	private String description;
 	
 	@Getter @Setter
-	private RecipeCommand recipeCommand;
+	private Long recipeId;
 	
 	@Getter @Setter
 	private BigDecimal amount;

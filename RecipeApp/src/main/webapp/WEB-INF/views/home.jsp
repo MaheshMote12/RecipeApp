@@ -15,11 +15,18 @@
 									<th>ID</th>
 									<th>Description</th>
 									<th>View</th>
+									<th>Update</th>
+									<th>Delete</th>
+									<th><a href="${pageContext.servletContext.contextPath}/recipe/new">New</a></th>
 								</tr>
 							</thead>
 								<c:forEach items="${recipies}" var="recipe" >
 									<tr>
-										<td>${recipe.recipeId}</td><td>${recipe.description}</td><td><a href="${pageContext.servletContext.contextPath}/recipe/show/${recipe.recipeId}" >View</a> </td>
+										<td>${recipe.recipeId}</td>
+										<td>${recipe.description}</td>
+										<td><a href="${pageContext.servletContext.contextPath}/recipe/show/${recipe.recipeId}" >View</a></td>
+										<td><a href="${pageContext.servletContext.contextPath}/recipe/${recipe.recipeId}/update">Update</a></td>
+										<td><a href="${pageContext.servletContext.contextPath}/recipe/${recipe.recipeId}/delete">Delete</a></td>
 									</tr>
 								</c:forEach>
 						</table>		

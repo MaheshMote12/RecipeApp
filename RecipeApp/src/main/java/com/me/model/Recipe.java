@@ -43,6 +43,7 @@ public class Recipe {
 	
 	@Getter @Setter
 	@OneToMany(cascade=CascadeType.ALL, /*fetch=FetchType.EAGER,*/ mappedBy="recipe")
+	@OnDelete(action=OnDeleteAction.CASCADE)
 	private List<Ingrediants> ingrediants = new ArrayList<>();
 	
 	@Getter @Setter

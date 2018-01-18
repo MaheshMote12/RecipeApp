@@ -42,6 +42,10 @@
 	</c:if>
 	
 
+	<c:if test="${userclickIngredieants}">
+		<%@include file="list.jsp"   %> 
+	</c:if>
+
 
 </body>
 </html>

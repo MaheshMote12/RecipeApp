@@ -76,8 +76,21 @@
 
 				<div class="panel panel-primary">
 					<div class="panel-heading">
+					
+						 <div class="row">
+                                <div class="col-md-10 ">
+					
 						<h1 class="panel-title" title="panel title here">Ingredients!</h1>
 					</div>
+					<div class="col-md-1">
+                      <a class="btn btn-default" href="${pageContext.servletContext.contextPath}/recipe/${recipe.recipeId}/ingredients"  role="button">Ingredients</a>
+					</div>
+					
+					</div>
+					</div>
+					
+					
+					
 					<div class="panel-body">
 						<div class="row">
 							<div class="col-md-12">

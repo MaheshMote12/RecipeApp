@@ -15,4 +15,12 @@ public interface RecipeService {
 	public Recipe findRecipeById(Long id);
 	
 	public List<Recipe> getRecipies();
+	
+	public List<String> getCategories();
+
+	public RecipeCommand updateRecipe(RecipeCommand recipeCommand);
+
+	public RecipeCommand findCommandById(Long valueOf);
+	
+	public void deleteById(Long id);
 }
