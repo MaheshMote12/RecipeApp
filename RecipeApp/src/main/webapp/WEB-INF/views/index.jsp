@@ -8,7 +8,6 @@
 
 <c:url value="/webjars/bootstrap/css" var="css"  />
 <c:set  value="${pageContext.servletContext.contextPath}/webjars/bootstrap/js" var="js"  />
-
 <!DOCTYPE html>
 <HTML>
 <head>
@@ -44,6 +43,11 @@
 
 	<c:if test="${userclickIngredieants}">
 		<%@include file="list.jsp"   %> 
+	</c:if>
+
+
+	<c:if test="${userclickUploadImage}">
+		<%@include file="imageUploadForm.jsp"   %> 
 	</c:if>
 
 

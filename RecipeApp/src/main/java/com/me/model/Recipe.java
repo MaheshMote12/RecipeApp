@@ -42,7 +42,7 @@ public class Recipe {
 	private Long recipeId;
 	
 	@Getter @Setter
-	@OneToMany(cascade=CascadeType.ALL, /*fetch=FetchType.EAGER,*/ mappedBy="recipe")
+	@OneToMany(cascade=CascadeType.ALL, /*fetch=FetchType.EAGER,*/ mappedBy="recipe",orphanRemoval=true)
 	@OnDelete(action=OnDeleteAction.CASCADE)
 	private List<Ingrediants> ingrediants = new ArrayList<>();
 	
@@ -56,6 +56,10 @@ public class Recipe {
 	private String source;
 	@Getter @Setter
 	private String url;
+	
+	@Lob
+	@Getter @Setter
+	private Byte[] image;
 	
 	@Getter @Setter
 	@ManyToMany(cascade=CascadeType.ALL, targetEntity=Category.class)
@@ -76,10 +80,6 @@ public class Recipe {
 	@Enumerated(EnumType.STRING)
 	@Getter @Setter
 	private Difficulty difficulty;
-	
-	@Lob
-	@Getter @Setter
-	private byte[] image;
 	
 	@Lob
 	@Getter @Setter

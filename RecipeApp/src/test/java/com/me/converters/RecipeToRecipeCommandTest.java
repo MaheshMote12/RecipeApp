@@ -67,7 +67,7 @@ public class RecipeToRecipeCommandTest {
 		recipe.setCategories(new HashSet<>());
 		recipe.setDescription("delicious");
 		recipe.setDirection("direcition");
-		recipe.setImage(new byte[12]);
+		recipe.setImage(new Byte[12]);
 		recipe.setIngrediants(new ArrayList<>());
 		recipe.setNotes(new Notes());
 		recipe.setPrepTime(2);

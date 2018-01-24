@@ -71,7 +71,6 @@ public class RecipeController
 //		RecipeCommand command = new RecipeCommand();
 		
 		model.addAttribute("diff", Difficulty.values());
-		List<Recipe> recipies = recipeService.getRecipies();
 		
 /*		Set<Category> l = new HashSet<>();
 		
@@ -85,10 +84,8 @@ public class RecipeController
 		
 		model.addAttribute("cate", l);
 */		
-		System.out.println("HHHHHHHHHHHHHHHHHHHppppppppppppppppppHHHJJJJHHHHH");
-		List<String> categories = recipeService.getCategories();
 		
-		model.addAttribute("cate", recipeService.getCategories());
+//		model.addAttribute("cate", recipeService.getCategories());
 		
 		
 		model.addAttribute("recipe", new RecipeCommand());

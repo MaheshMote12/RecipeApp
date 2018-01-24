@@ -1,0 +1,12 @@
+alter table Ingrediants
+    drop foreign key uom_id,
+    drop foreign key recipe_recipeId;
+ALTER TABLE Ingrediants
+    ADD CONSTRAINT uom_id_frn
+        FOREIGN KEY (uom_id) 
+        REFERENCES UnitOfMeasure (id)
+        ON DELETE CASCADE,
+    ADD CONSTRAINT recipe_id_frgn
+        FOREIGN KEY (recipe_recipeId) 
+        REFERENCES Recipe (recipeId)
+        ON DELETE CASCADE ;
