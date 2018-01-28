@@ -75,7 +75,7 @@ public class RecipeServiceImpl implements RecipeService{
 		
 		if(recipe == null)
 		{
-			throw new RuntimeException("User Is Not Present");
+			throw new RecipeNotFoundException("User Is Not Present For ID Value: "+ id.toString());
 		}
 		return recipe;
 		 

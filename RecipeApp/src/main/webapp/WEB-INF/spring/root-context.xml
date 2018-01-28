@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
 
 
 	<beans profile="prod">
-
-
+			<context:property-placeholder location="classpath:/DBProperties/prod.properties" />
 	</beans>
 
+	<beans profile="dev">
+			<context:property-placeholder location="classpath:/DBProperties/dev.properties" />
+	</beans>
+
+	<beans profile="!prod, !dev">
+			<context:property-placeholder location="classpath:/DBProperties/default.properties" />
+	</beans>
 
 
 	<!-- Root Context: defines shared resources visible to all other web components -->
@@ -31,15 +40,26 @@
 				</props>
 			</property>
 		</bean>
-
-		<bean id="dataSource"   
+	
+<!-- 		<bean name="dataSource"   
 			class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 			<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 			<property name="password" value="4444" />
-			<property name="url" value="jdbc:mysql://localhost:3306/profiler" />
-			<property name="username" value="root" />
+			<property name="url" value="jdbc:mysql://localhost:3306/recipe_dev" />
+			<property name="username" value="recipe_dev_user" />
 		</bean>
-
+ -->
+ 
+ 
+ 		<bean name="dataSource"   
+			class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+			<property name="driverClassName" value="${user.driverClass}" />
+			<property name="password" value="${user.password}" />
+			<property name="url" value="${user.url}" />
+			<property name="username" value="${dbuser.name}" />
+		</bean>
+ 		
+		
 		<tx:annotation-driven transaction-manager="transactionManager" />
 
 		<bean id="transactionManager"

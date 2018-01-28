@@ -28,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.me.command.RecipeCommand;
 import com.me.converters.RecipeCommandToRecipe;
 import com.me.converters.RecipeToRecipeCommand;
+import com.me.exceptions.RecipeNotFoundException;
 import com.me.model.Recipe;
 import com.me.repository.RecipeRepository;
 import com.me.serviceImpl.RecipeServiceImpl;
@@ -81,6 +82,23 @@ public class RecipeServiceImplTest {
 		verify(recipeRepo, never()).getRecipies();
 		
 	}
+	
+	@Test(expected=RecipeNotFoundException.class)
+	public void testFindRecipeById_If_NotPresent() {
+		
+		Recipe recipe = null;
+		
+		when(recipeRepo.findById(anyLong())).thenReturn(recipe);
+		
+		
+		Recipe recipe2 = recipeService.findRecipeById(1l);
+		
+		verify(recipeRepo, times(1)).findById(anyLong());
+		verify(recipeRepo, never()).getRecipies();
+		
+	}
+
+	
 /*
 	@Test
 	public void testGetRecipies() {

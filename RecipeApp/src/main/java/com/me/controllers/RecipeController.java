@@ -2,20 +2,26 @@ package com.me.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.ModelAndView;
 
-import com.me.command.CategoryCommand;
-import com.me.command.IngrediantsCommand;
 import com.me.command.RecipeCommand;
+import com.me.exceptions.RecipeNotFoundException;
 import com.me.model.Difficulty;
 import com.me.model.Recipe;
 import com.me.service.RecipeService;
@@ -28,6 +34,7 @@ import lombok.extern.slf4j.Slf4j;
 public class RecipeController 
 {
 	
+	private  static final  String RECIPE_RECIPE_URL = "recipeForm";
 	
 	@Autowired
 	private RecipeService recipeService;
@@ -64,6 +71,20 @@ public class RecipeController
 		
 	}
 	
+	@ResponseStatus(value=HttpStatus.NOT_FOUND)
+	@ExceptionHandler(value=RecipeNotFoundException.class)
+	public ModelAndView handleNotFound(Exception exception){
+		log.info("ExceptionHandler error method ");
+		log.error(exception.getMessage() );
+		
+		ModelAndView view = new ModelAndView("404error");
+		
+		view.addObject("exception", exception);
+		return view;
+	}
+
+	
+	
 	@GetMapping
 	@RequestMapping("/recipe/new")
 	public String saveRecipe(Model model){
@@ -97,23 +118,24 @@ public class RecipeController
 
 	@PostMapping("/recipe/recipeForm")
 	/*@RequestMapping(value="/recipe", method=RequestMethod.POST)*/
-	public String saveOrUpdateRecipe( @ModelAttribute("recipe") RecipeCommand recipeCommand, Model model){
+	public String saveOrUpdateRecipe( @Valid @ModelAttribute("recipe") RecipeCommand recipeCommand, BindingResult result, Model model){
 		
 //		uncomment to get back to Set instead of List
 //		Set<CategoryCommand> set = recipeCommand.getCategories();
 		
-		List<CategoryCommand> set = recipeCommand.getCategories();
 		
-		for (CategoryCommand categoryCommand : set) {
-			System.out.println("CATEGORY NAME IS :--------------->>>>>>>> " +categoryCommand.getCategoryName());
+		if(result.hasErrors()){
+			
+			result.getAllErrors().forEach( errorObj -> log.error(errorObj.toString()) );
+			
+			model.addAttribute("titel", "New Recipe");
+			model.addAttribute("userclickNewRecipe", true);
+			
+			return "index";
 		}
 		
 		
-		List<IngrediantsCommand> list = recipeCommand.getIngrediants();
-		
-		
-		System.out.println(list.get(0).getAmount());
-		System.out.println(list.get(0).getUomC().getUnit());
+	
 		
 		RecipeCommand savedRecipe = recipeService.saveRecipe(recipeCommand);
 		
