@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.me.model.Ingrediants;
 import com.me.model.Recipe;
 import com.me.model.UnitOfMeasure;
 import com.me.repository.RecipeRepository;
@@ -63,13 +64,11 @@ public class RecipeRepositoryImpl implements RecipeRepository {
 	public Recipe findById(Long id) {
 
 		Session session = sessionFactory.openSession();
-		
 
 		Recipe recipe = session.get(Recipe.class, id);
 //		List<Recipe> list = session.createQuery("select r from Recipe r JOIN FETCH r.ingrediants where r.recipeId =:id", Recipe.class).setParameter("id", id).getResultList();
 		
 //		return list.get(0);
-		
 		
 		return recipe;
 	}
@@ -92,12 +91,22 @@ public class RecipeRepositoryImpl implements RecipeRepository {
 		session.beginTransaction();
 		Recipe recipe = session.load(Recipe.class, l);
 		
-		session.delete(recipe);
-	/*	List<Ingrediants> list = recipe.getIngrediants();
-		for (Ingrediants ingrediants : list) {
-			session.delete(ingrediants);
+		
+		
+//		session.delete(recipe);
+		List<Ingrediants> list = recipe.getIngrediants();
+		
+/*		for (Ingrediants ingrediants : list) {
+			
+			ingrediants.setUom(null);
 		}
 */		
+		session.delete(recipe);
+		
+/*		session.createQuery( "delete from Ingrediants r where recipe_recipeId =:id" ).setParameter("id", l).executeUpdate();
+
+		session.createQuery( "delete from Recipe r where r.recipeId =:id" ).setParameter("id", l).executeUpdate();*/
+		
 		session.getTransaction().commit();
 	}
 

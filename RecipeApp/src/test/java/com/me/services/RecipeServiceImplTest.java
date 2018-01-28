@@ -1,6 +1,7 @@
 package com.me.services;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.anyLong;
@@ -10,17 +11,24 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.io.IOException;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.powermock.modules.junit4.PowerMockRunner;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.me.command.RecipeCommand;
 import com.me.converters.RecipeCommandToRecipe;
 import com.me.converters.RecipeToRecipeCommand;
+import com.me.exceptions.RecipeNotFoundException;
 import com.me.model.Recipe;
 import com.me.repository.RecipeRepository;
 import com.me.serviceImpl.RecipeServiceImpl;
@@ -74,6 +82,23 @@ public class RecipeServiceImplTest {
 		verify(recipeRepo, never()).getRecipies();
 		
 	}
+	
+	@Test(expected=RecipeNotFoundException.class)
+	public void testFindRecipeById_If_NotPresent() {
+		
+		Recipe recipe = null;
+		
+		when(recipeRepo.findById(anyLong())).thenReturn(recipe);
+		
+		
+		Recipe recipe2 = recipeService.findRecipeById(1l);
+		
+		verify(recipeRepo, times(1)).findById(anyLong());
+		verify(recipeRepo, never()).getRecipies();
+		
+	}
+
+	
 /*
 	@Test
 	public void testGetRecipies() {
@@ -106,6 +131,33 @@ public class RecipeServiceImplTest {
 		
 //		then
 		verify(recipeRepo, times(1)).deleteById(anyLong());
+	}
+	
+	@Test
+	public void testSaveImageFile() throws IOException{
+		
+//		given
+		long id =1l;
+		MultipartFile multipartFile = new MockMultipartFile("imagFile", "file", MediaType.IMAGE_JPEG_VALUE, "this is file".getBytes() );
+		
+		
+		
+		Recipe recipe = new Recipe();
+		recipe.setRecipeId(1l);
+		
+		when(recipeRepo.findById(anyLong())).thenReturn(recipe);
+		
+		ArgumentCaptor<Recipe> captor = ArgumentCaptor.forClass(Recipe.class);
+		
+//		when
+		
+		recipeService.saveImageFile(id, multipartFile);
+
+//		then
+		
+		verify(recipeRepo, times(1)).mergeRecipe(captor.capture());
+		Recipe recipe2 = captor.getValue();
+		assertEquals(multipartFile.getBytes().length, recipe2.getImage().length);
 	}
 	
 	

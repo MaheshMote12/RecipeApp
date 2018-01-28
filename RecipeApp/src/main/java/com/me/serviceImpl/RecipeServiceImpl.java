@@ -1,10 +1,12 @@
 package com.me.serviceImpl;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.me.command.RecipeCommand;
 import com.me.converters.CategoryCommandToCategory;
@@ -17,6 +19,9 @@ import com.me.model.UnitOfMeasure;
 import com.me.repository.RecipeRepository;
 import com.me.service.RecipeService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 @Transactional
 public class RecipeServiceImpl implements RecipeService{
@@ -70,7 +75,7 @@ public class RecipeServiceImpl implements RecipeService{
 		
 		if(recipe == null)
 		{
-			throw new RuntimeException("User Is Not Present");
+			throw new RecipeNotFoundException("User Is Not Present For ID Value: "+ id.toString());
 		}
 		return recipe;
 		 
@@ -121,6 +126,39 @@ public class RecipeServiceImpl implements RecipeService{
 			throw new RecipeNotFoundException("No Recipe To Delete");
 		}
 		recipeRepository.deleteById(id);
+	}
+
+	@Override
+	public void saveImageFile(long recipeId, MultipartFile file) {
+
+		try {
+		
+			Recipe recipe = recipeRepository.findById(recipeId);
+
+			int i = 0;
+			Byte[] byteObjects = new Byte[file.getBytes().length];
+			
+			
+			for(byte b : file.getBytes()){
+				byteObjects[i++] = b;
+				
+			}
+			
+			recipe.setImage(byteObjects);
+			
+			recipeRepository.mergeRecipe(recipe);
+		
+		
+		} catch (IOException e) {
+
+//			handle better
+			log.error("error occured");
+			
+			e.printStackTrace();
+		}
+		
+		
+		
 	}
 	
 }

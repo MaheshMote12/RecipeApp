@@ -19,30 +19,27 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
+@Getter @Setter
 public class Ingrediants {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Getter @Setter
 	private Long id;
 	
 	@Lob
-	@Getter @Setter
 	private String description;
 	
 	@ManyToOne(targetEntity=Recipe.class, fetch=FetchType.LAZY)
 	@OnDelete(action=OnDeleteAction.CASCADE)
-	@Getter @Setter
 	private Recipe recipe;
 	
-	@Getter @Setter
 	private BigDecimal amount;
 
-	/*@OneToOne(cascade={CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH,
-			CascadeType.MERGE}, fetch=FetchType.EAGER)*/
-	@OneToOne(cascade={CascadeType.ALL})
+/*	@OneToOne(cascade={CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH,
+			CascadeType.MERGE}, fetch=FetchType.EAGER, orphanRemoval=true)
+*///	
+	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER, orphanRemoval=true, targetEntity=UnitOfMeasure.class)
 	@OnDelete(action=OnDeleteAction.CASCADE)
-	@Getter @Setter
 	private UnitOfMeasure uom;
 	
 	public Ingrediants() {

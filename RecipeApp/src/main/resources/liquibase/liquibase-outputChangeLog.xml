@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="Avi (generated)" id="1517142931344-1">
+        <createTable tableName="category">
+            <column autoIncrement="true" name="categoryId" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="categoryName" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Avi (generated)" id="1517142931344-2">
+        <createTable tableName="ingrediants">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="amount" type="DECIMAL(19, 2)"/>
+            <column name="description" type="LONGTEXT"/>
+            <column name="recipe_recipeId" type="BIGINT"/>
+            <column name="uom_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Avi (generated)" id="1517142931344-3">
+        <createTable tableName="notes">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="notes" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Avi (generated)" id="1517142931344-4">
+        <createTable tableName="recipe">
+            <column autoIncrement="true" name="recipeId" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="cookTime" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="LONGTEXT"/>
+            <column name="difficulty" type="VARCHAR(255)"/>
+            <column name="direction" type="LONGTEXT"/>
+            <column name="image" type="LONGBLOB"/>
+            <column name="prepTime" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="servings" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="source" type="VARCHAR(255)"/>
+            <column name="url" type="VARCHAR(255)"/>
+            <column name="notes_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Avi (generated)" id="1517142931344-5">
+        <createTable tableName="recipe_category">
+            <column name="recipe_fk" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="category_fk" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Avi (generated)" id="1517142931344-6">
+        <createTable tableName="unitofmeasure">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="unit" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Avi (generated)" id="1517142931344-7">
+        <addPrimaryKey columnNames="recipe_fk, category_fk" constraintName="PRIMARY" tableName="recipe_category"/>
+    </changeSet>
+    <changeSet author="Avi (generated)" id="1517142931344-8">
+        <createIndex indexName="FK5o5lv5kmrj1ncwp48jxjp4c5i" tableName="recipe_category">
+            <column name="category_fk"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Avi (generated)" id="1517142931344-9">
+        <createIndex indexName="FK8io0kqsmfdb8x48oeewlasj6p" tableName="ingrediants">
+            <column name="uom_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Avi (generated)" id="1517142931344-10">
+        <createIndex indexName="FK9sw1j651hxrmw217m8rrug400" tableName="ingrediants">
+            <column name="recipe_recipeId"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Avi (generated)" id="1517142931344-11">
+        <createIndex indexName="FKj318f2n6pg707rvwgo4ec3vty" tableName="recipe">
+            <column name="notes_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Avi (generated)" id="1517142931344-12">
+        <addForeignKeyConstraint baseColumnNames="category_fk" baseTableName="recipe_category" constraintName="FK5o5lv5kmrj1ncwp48jxjp4c5i" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="categoryId" referencedTableName="category"/>
+    </changeSet>
+    <changeSet author="Avi (generated)" id="1517142931344-13">
+        <addForeignKeyConstraint baseColumnNames="uom_id" baseTableName="ingrediants" constraintName="FK8io0kqsmfdb8x48oeewlasj6p" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="unitofmeasure"/>
+    </changeSet>
+    <changeSet author="Avi (generated)" id="1517142931344-14">
+        <addForeignKeyConstraint baseColumnNames="recipe_recipeId" baseTableName="ingrediants" constraintName="FK9sw1j651hxrmw217m8rrug400" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="recipeId" referencedTableName="recipe"/>
+    </changeSet>
+    <changeSet author="Avi (generated)" id="1517142931344-15">
+        <addForeignKeyConstraint baseColumnNames="notes_id" baseTableName="recipe" constraintName="FKj318f2n6pg707rvwgo4ec3vty" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="notes"/>
+    </changeSet>
+    <changeSet author="Avi (generated)" id="1517142931344-16">
+        <addForeignKeyConstraint baseColumnNames="recipe_fk" baseTableName="recipe_category" constraintName="FKp8fy44n7msv3q4y8hbjlbqikp" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="recipeId" referencedTableName="recipe"/>
+    </changeSet>
+    <changeSet id="tag-1.0" author="Avi (generated)">
+    <tagDatabase tag="1.0" />
+  </changeSet>
+</databaseChangeLog>

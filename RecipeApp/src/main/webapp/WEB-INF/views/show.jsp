@@ -9,7 +9,13 @@
 				<div class="panel panel-primary">
 					<div class="panel-heading">
 						<h1 class="panel-title" title="${recipe.description }">${recipe.description }</h1>
+						
 					</div>
+					
+					<div class="panel-heading">
+                      <a class="btn btn-default" href="${pageContext.servletContext.contextPath}/recipe/${recipe.recipeId}/image"  role="button">Change Image</a>
+					</div>
+					
 					<div class="panel-body">
 						<div class="row">
 							<div class="col-md-3">
@@ -25,6 +31,13 @@
 								</ul>
 
 							</div>
+							
+							<div class="col-md-6">
+								
+								<img alt="this is image" src="${pageContext.servletContext.contextPath}/recipe/${recipe.recipeId}/recipeImage" width="200" height="200">
+							
+							</div>
+							
 						</div>
 						<div class="row">
 							<div class="col-md-3">

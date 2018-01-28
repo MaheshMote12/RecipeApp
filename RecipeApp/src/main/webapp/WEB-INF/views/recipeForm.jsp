@@ -10,8 +10,18 @@
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
         
+        <spring:hasBindErrors name="recipe">
+        	<div class="alert alert-danger">
+        		<p>Please correct Errors Below</p>
+        	</div>
+        </spring:hasBindErrors>
+        
+        
         <spring:url value="/recipe/recipeForm" var="recipeUrl"/>
             <form:form  action="${recipeUrl}"  modelAttribute="recipe" method="post">
+
+
+        <form:input type="hidden" path="image"></form:input>
  
 <%--                 <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
                     <p>Please Correct Errors Below</p>
@@ -31,9 +41,13 @@
                                 
  --%>                                    
  
- 							<div class="col-md-3 form-group">
+ 							<spring:bind path="description">
+ 							
+ 
+ 							<div class="col-md-3 form-group ${status.error ? 'has-error' : ''} ">
  									<label for="${recipe.description}">Recipe Description:</label>
-                                    <form:input type="text" class="form-control" path="description" errorclass="has-error"/>
+                                    <form:input type="text" class="form-control" path="description" />
+ 									<form:errors path="description" ></form:errors>
           <%--                           <span class="help-block" th:if="${#fields.hasErrors('description')}">
                                         <ul>
                                             <li th:each="err : ${#fields.errors('description')}" th:text="${err}"/>
@@ -42,7 +56,8 @@
                                 </div>
            --%>              
            
-           				</div>
+           				 </div>
+ 						</spring:bind>
            				
            					<div class="row">
                                 <div class="col-md-3 form-group">
@@ -113,34 +128,44 @@
                                 ? 'col-md-3 form-group has-error' : 'col-md-3 form-group'">
                                 
  --%>                                    
+ 		
+ 						<spring:bind path="prepTime">
  	
- 							<div class="col-md-3 form-group">
+ 							<div class="col-md-3 form-group ${status.error ? 'has-error' : ''} ">
  									<label>Prep Time:</label>
                                     <form:input type="text" class="form-control" path="prepTime" errorclass="has-error"/>
+                                    <form:errors path="prepTime"></form:errors>
      <%--                                <span class="help-block" th:if="${#fields.hasErrors('prepTime')}">
                                         <ul>
                                             <li th:each="err : ${#fields.errors('prepTime')}" th:text="${err}"/>
                                         </ul>
                                     </span>
       --%>                  </div>
+ 						</spring:bind>
           <%--                       <div class="col-md-3 form-group" th:class="${#fields.hasErrors('cookTime')}
                                 ? 'col-md-3 form-group has-error' : 'col-md-3 form-group'">
            --%>                          
-           
-           						<div class="col-md-3 form-group">
-           						<label>Cooktime:</label>
+					
+							<spring:bind path="cookTime">
+							
+           						<div class="col-md-3 form-group ${status.error ? 'has-error' : ''} ">
+           						<label>Cook time:</label>
                                     <form:input type="text" class="form-control" path="cookTime" errorclass="has-error"/>
+                                    <form:errors path="cookTime"></form:errors>
                <%--                      <span class="help-block" th:if="${#fields.hasErrors('cookTime')}">
                                         <ul>
                                             <li th:each="err : ${#fields.errors('cookTime')}" th:text="${err}"/>
                                         </ul>
                                     </span>
                 --%>           </div> 
+							</spring:bind>           
 
 
 
 	<!-- 	MANY OPTIONS FOR GETTING ENUMERATION VALUES -->
 
+
+						
                                 <div class="col-md-3 form-group">
                                     <label>Difficulty:</label>
                                     
@@ -170,37 +195,44 @@
                                 
                                 
  --%>                                    
+ 					<spring:bind path="servings">
  
- 
- 							<div class="col-md-3 form-group">
+ 							<div class="col-md-3 form-group ${status.error ? 'has-error' : ''} ">
  								<label>Servings:</label>
-                                    <form:input type="text" class="form-control" path="servings" cssClass="has-error"/>
+                                    <form:input type="text" class="form-control" path="servings"  />
+                                    <form:errors path="servings"></form:errors>
 <%--                                     <span class="help-block" th:if="${#fields.hasErrors('servings')}">
                                         <ul>
                                             <li th:each="err : ${#fields.errors('servings')}" th:text="${err}"/>
                                         </ul>
                                     </span>
  --%>                       </div>
+ 					</spring:bind>
  
  
  
-                                 <div class="col-md-3 form-group">
+ 							<spring:bind path="source">
+                                 <div class="col-md-3 form-group ${status.error ? 'has-error' : ''} ">
                                     <label>Source:</label>
                                     <form:input type="text" class="form-control" path="source"/>
+                                    <form:errors path="source"></form:errors>
                                 </div>
+ 							</spring:bind>
      <%--                            <div class="col-md-3 form-group" th:class="${#fields.hasErrors('url')}
                                 ? 'col-md-3 form-group has-error' : 'col-md-3 form-group'">
                                 
-      --%>                               
-      							<div class="col-md-3 form-group">
+      --%>                     <spring:bind path="url">
+      							<div class="col-md-3 form-group ${status.error ? 'has-error' : ''} ">
       								<label>URL:</label>
                                     <form:input type="text" class="form-control" path="url" />
+                                    <form:errors path="url"></form:errors>
           <%--                           <span class="help-block" th:if="${#fields.hasErrors('url')}">
                                         <ul>
                                             <li th:each="err : ${#fields.errors('url')}" th:text="${err}"/>
                                         </ul>
                                     </span>
            --%>                       </div>
+      							</spring:bind>          
                            </div>
                         </div>
                     </div>
@@ -267,15 +299,19 @@
       						</div>
                         </div>
                     </div>
+                    
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <h1 class="panel-title">Directions</h1>
                         </div>
-                        <div class="panel-body">
+                        <div class="panel-body  ">
                             <div class="row">
-                                <div class="col-md-12 form-group">
+                    <spring:bind path="direction">
+                                <div class="col-md-12 form-group ${status.error ? 'has-error' : ''}">
                                 <form:textarea path="direction" cssClass="form-control" rows="3"/>
+                                <form:errors path="direction"></form:errors>
                                    </div>
+                    </spring:bind>
                             </div> 
                         </div>
                     </div>

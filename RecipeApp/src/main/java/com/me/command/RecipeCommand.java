@@ -3,7 +3,11 @@ package com.me.command;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Lob;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.URL;
 
 import com.me.model.Difficulty;
 
@@ -12,44 +16,45 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Data
+@Getter @Setter
 public class RecipeCommand {
 
-	@Getter @Setter
 	private Long recipeId;
 	
-	@Getter @Setter
+	
 	private List<IngrediantsCommand> ingrediants = new ArrayList<>();
 	
-	@Getter @Setter
+	@Min(1)
+	@Max(999)
 	private int prepTime;
-	@Getter @Setter
+	@Min(1)
+	@Max(999)
 	private int cookTime;
-	@Getter @Setter
+
+	@Min(1)
+	@Max(100)
 	private int servings;
-	@Getter @Setter
+	
 	private String source;
-	@Getter @Setter
+	
+	@NotBlank
+	@URL
 	private String url;
 	
 //	@Getter @Setter
 //	private Set<CategoryCommand> categories = new HashSet<>();
 	
-	@Getter @Setter
 	private NotesCommand notes;
 	
-	@Lob
-	@Getter @Setter
+	@NotBlank
 	private String description;
 	
-	@Getter @Setter
 	private Difficulty difficulty;
 	
-	@Getter @Setter
-	private byte[] image;
+	private Byte[] image;
 	
-	@Getter @Setter
+	@NotBlank
 	private String direction;
 	
-	@Getter @Setter
-	List<CategoryCommand> categories = new ArrayList<>();
+	private List<CategoryCommand> categories = new ArrayList<>();
 }

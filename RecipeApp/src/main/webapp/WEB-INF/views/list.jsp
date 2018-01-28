@@ -40,7 +40,7 @@
 	                                <td>${ingr.description}</td>
 	                                <td><a href="${pageContext.servletContext.contextPath}/recipe/${recipe.recipeId}/ingredient/${ingr.id}/show">View</a></td>
 	                                <td><a href="#">Update</a></td>
-	                                <td><a href="#">Delete</a></td>
+	                                <td><a href="${pageContext.servletContext.contextPath}/recipe/${recipe.recipeId}/ingredient/${ingr.id}/delete">Delete</a></td>
                             </tr>
                             	</c:forEach>
                            
